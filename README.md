@@ -1,96 +1,73 @@
 # Inventory App
 
-Inventory App adalah aplikasi manajemen stok barang berbasis web yang dikembangkan menggunakan **Laravel 12**. Aplikasi ini memudahkan pencatatan keluar masuk barang, manajemen stok, serta import data masal menggunakan file Excel.
+Aplikasi manajemen stok barang berbasis web menggunakan Laravel 12.
 
-## 🌟 Fitur Utama
-- **Dashboard Statistik**: Pantau total barang, barang masuk, dan barang keluar secara real-time.
-- **Manajemen Barang**: Tambah, edit, dan hapus data barang (Master Data).
-- **Import Data**: Mendukung import data massal dari file Excel (`.xlsx`, `.xls`, `.csv`).
-- **Transaksi**:
-  - **Barang Masuk**: Mencatat stok masuk dengan sistem *rollback* otomatis jika data dihapus.
-  - **Barang Keluar**: Mencatat stok keluar dengan peringatan stok minim.
-- **Manajemen User**: Tambah, edit user, dan reset password (untuk Administrator).
-- **History & Tracking**: Setiap transaksi (masuk/keluar) mencatat siapa admin yang melakukan tindakan tersebut.
+## Fitur Utama
+- Dashboard statistik
+- Manajemen Barang (Master Data)
+- Import data massal dari Excel
+- Pencatatan transaksi Barang Masuk dan Barang Keluar
+- Manajemen User
 
----
+## Persyaratan Sistem
+- XAMPP (dengan PHP >= 8.2)
+- Composer
+- Git
 
-## 🛠️ Persyaratan Sistem (Prerequisites)
-Sebelum menjalankan project ini, pastikan sistem Anda telah menginstall:
-- **PHP** >= 8.2
-- **Composer** (untuk manajemen dependensi PHP)
-- **MySQL** atau MariaDB
-- **Laragon / XAMPP** (Sangat disarankan menggunakan Laragon untuk OS Windows)
+## Panduan Setup (Menggunakan XAMPP)
 
----
-
-## 🚀 Panduan Setup & Instalasi (Step-by-Step)
-
-Ikuti langkah-langkah di bawah ini untuk menjalankan project dari awal hingga berjalan sempurna di komputer Anda:
-
-### 1. Clone atau Download Project
-Buka terminal/CMD dan jalankan perintah:
+### 1. Clone Repository
+Pastikan Anda berada di folder `htdocs` pada instalasi XAMPP Anda (misalnya `C:\xampp\htdocs`), lalu jalankan perintah:
 ```bash
-git clone <url-repository-anda>
+git clone <url-repository-anda> inventory-app
 cd inventory-app
 ```
 
-### 2. Install Dependensi (Composer)
-Unduh seluruh library dan package yang dibutuhkan oleh Laravel:
+### 2. Install Dependensi
+Jalankan perintah berikut untuk mengunduh semua package yang dibutuhkan:
 ```bash
 composer install
 ```
 
-### 3. Setup File Konfigurasi (.env)
-Duplikat file `.env.example` menjadi `.env`. Di terminal/CMD jalankan:
+### 3. Setup Konfigurasi Environment
+Salin file konfigurasi bawaan dan generate key aplikasi:
 ```bash
 copy .env.example .env
-```
-*(Atau Anda bisa copy-paste manual file `.env.example` dan ubah namanya menjadi `.env`)*.
-
-### 4. Generate Application Key
-Jalankan perintah ini untuk membuat kunci keamanan aplikasi:
-```bash
 php artisan key:generate
 ```
 
-### 5. Konfigurasi Database
-1. Buka aplikasi **HeidiSQL** atau **phpMyAdmin** (bawaan Laragon/XAMPP).
-2. Buat database baru dengan nama `inventory_app` (atau nama lain sesuai selera).
-3. Buka file `.env` di text editor (VS Code, dll), lalu sesuaikan bagian koneksi database:
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=inventory_app
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
+### 4. Setup Database
+- Buka phpMyAdmin (http://localhost/phpmyadmin).
+- Buat database baru dengan nama `inventory_app`.
+- Buka file `.env` di project Anda dan pastikan konfigurasi database sudah sesuai:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventory_app
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-### 6. Jalankan Migrasi & Seeder Database
-Perintah ini akan membuat semua struktur tabel ke dalam database Anda secara otomatis beserta data bawaan (seperti akun Admin default):
+### 5. Jalankan Migration dan Seeder
+Ini adalah langkah paling penting untuk membuat struktur tabel di database beserta akun admin bawaan:
 ```bash
 php artisan migrate --seed
 ```
+*(Akun login default: Email `admin@admin.com`, Password `password`)*
 
-*(Catatan: Akun default biasanya menggunakan email `admin@admin.com` dengan password `password`, kecuali telah diubah di file DatabaseSeeder).*
-
-### 7. Jalankan Server Lokal
-Nyalakan server *development* Laravel:
+### 6. Akses Aplikasi
+Gunakan server bawaan Laravel untuk menjalankan aplikasi:
 ```bash
 php artisan serve
 ```
+Buka browser dan akses URL: **http://localhost:8000**
 
-Aplikasi Anda sekarang dapat diakses melalui browser di alamat:
-**http://localhost:8000** atau **http://127.0.0.1:8000**
+*(Alternatif tanpa artisan serve, akses langsung melalui XAMPP: http://localhost/inventory-app/public)*
 
----
-
-## 💡 Troubleshooting Umum
-
-- **Class "ZipArchive" not found saat Import Excel**:
-  Pastikan ekstensi `zip` di PHP Anda aktif. Jika menggunakan Laragon: Klik Kanan Laragon -> PHP -> Quick Settings -> centang `zip`.
-- **Aplikasi terlihat error setelah ditarik (pull) dari Git**:
-  Cobalah jalankan `composer install` dan `php artisan optimize:clear`.
-
----
-*Dibuat menggunakan Laravel 12 & Bootstrap 5.*
+## Troubleshooting XAMPP
+Jika Anda mendapati error `Class "ZipArchive" not found` ketika melakukan import Excel:
+1. Buka XAMPP Control Panel.
+2. Klik tombol **Config** pada modul Apache, pilih `php.ini`.
+3. Cari baris `;extension=zip` dan hapus tanda titik koma (`;`) di depannya menjadi `extension=zip`.
+4. Simpan file `php.ini` dan **Restart** modul Apache di XAMPP.
