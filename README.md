@@ -54,7 +54,7 @@ Ini adalah langkah paling penting untuk membuat struktur tabel di database beser
 ```bash
 php artisan migrate --seed
 ```
-*(Akun login default: Email `admin@admin.com`, Password `password`)*
+*(Akun login default: Email `admin@gmail.com`, Password `password123`)*
 
 ### 6. Akses Aplikasi
 Gunakan server bawaan Laravel untuk menjalankan aplikasi:
